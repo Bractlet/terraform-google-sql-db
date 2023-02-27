@@ -126,9 +126,12 @@ variable "maintenance_window" {
     hour         = number
     update_track = string
   })
-  default = {}
+  default = {
+    day          = null
+    hour         = null
+    update_track = null
+  }
 }
-
 variable "sql_server_audit_config" {
   description = "SQL Server Audit Config"
   type = object({
