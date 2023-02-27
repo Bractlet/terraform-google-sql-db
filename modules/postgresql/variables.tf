@@ -263,10 +263,10 @@ variable "read_replicas" {
       update_track = string
     }))
     sql_server_audit_config = optional(object({
-      retention_interval = string
-      upload_interval    = string
-      time_zone          = string
-      bucket             = string
+      retention_interval = optional(string)
+      upload_interval    = optional(string)
+      time_zone          = optional(string)
+      bucket             = optional(string)
     }))
     encryption_key_name = string
   }))

@@ -40,6 +40,15 @@ resource "google_sql_database_instance" "replicas" {
     activation_policy           = "ALWAYS"
     availability_type           = lookup(each.value, "availability_type", var.availability_type)
     deletion_protection_enabled = lookup(each.value, "deletion_protection_enabled", var.deletion_protection_enabled)
+    dynamic "sql_server_audit_config" {
+      for_each = lookup(each.value, "sql_server_audit_config", var.sql_server_audit_config)
+      content {
+        retention_interval = lookup(sql_server_audit_config.value, "retention_interval", null)
+        upload_interval    = lookup(sql_server_audit_config.value, "upload_interval", null)
+        bucket             = lookup(sql_server_audit_config.value, "bucket", null)
+        time_zone          = lookup(sql_server_audit_config.value, "time_zone", null)
+      }
+    }
 
     dynamic "ip_configuration" {
       for_each = [lookup(each.value, "ip_configuration", var.ip_configuration)]
@@ -110,16 +119,6 @@ resource "google_sql_database_instance" "replicas" {
       day          = lookup(maintenance_window.value, "day", null)
       hour         = lookup(maintenance_window.value, "hour", null)
       update_track = lookup(maintenance_window.value, "update_track", null)
-    }
-  }
-
-  dynamic "sql_server_audit_config" {
-    for_each = lookup(each.value, "sql_server_audit_config", var.sql_server_audit_config)
-    content {
-      retention_interval = lookup(sql_server_audit_config.value, "retention_interval", null)
-      upload_interval    = lookup(sql_server_audit_config.value, "upload_interval", null)
-      bucket             = lookup(sql_server_audit_config.value, "bucket", null)
-      time_zone          = lookup(sql_server_audit_config.value, "time_zone", null)
     }
   }
 
