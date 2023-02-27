@@ -137,7 +137,12 @@ variable "sql_server_audit_config" {
     time_zone          = string
     bucket             = string
   })
-  default = {}
+  default = {
+    retention_interval = null
+    upload_interval    = null
+    time_zone          = null
+    bucket             = null
+  }
 }
 
 variable "database_flags" {
