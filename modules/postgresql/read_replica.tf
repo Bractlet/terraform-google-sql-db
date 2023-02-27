@@ -110,15 +110,15 @@ resource "google_sql_database_instance" "replicas" {
     location_preference {
       zone = lookup(each.value, "zone", var.zone)
     }
-
-  }
-  dynamic "maintenance_window" {
-    for_each = lookup(each.value, "maintenance_window", var.maintenance_window)
-    content {
-      day          = lookup(maintenance_window.value, "day", null)
-      hour         = lookup(maintenance_window.value, "hour", null)
-      update_track = lookup(maintenance_window.value, "update_track", null)
+    dynamic "maintenance_window" {
+      for_each = lookup(each.value, "maintenance_window", var.maintenance_window)
+      content {
+        day          = lookup(maintenance_window.value, "day", null)
+        hour         = lookup(maintenance_window.value, "hour", null)
+        update_track = lookup(maintenance_window.value, "update_track", null)
+      }
     }
+
   }
 
   depends_on = [google_sql_database_instance.default]
