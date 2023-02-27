@@ -36,17 +36,19 @@ resource "google_sql_database_instance" "replicas" {
   }
 
   settings {
-    tier              = lookup(each.value, "tier", var.tier)
-    activation_policy = "ALWAYS"
-    availability_type = lookup(each.value, "availability_type", var.availability_type)
+    tier                        = lookup(each.value, "tier", var.tier)
+    activation_policy           = "ALWAYS"
+    availability_type           = lookup(each.value, "availability_type", var.availability_type)
+    deletion_protection_enabled = lookup(each.value, "deletion_protection_enabled", var.deletion_protection_enabled)
 
     dynamic "ip_configuration" {
       for_each = [lookup(each.value, "ip_configuration", var.ip_configuration)]
       content {
-        ipv4_enabled       = lookup(ip_configuration.value, "ipv4_enabled", null)
-        private_network    = lookup(ip_configuration.value, "private_network", null)
-        require_ssl        = lookup(ip_configuration.value, "require_ssl", null)
-        allocated_ip_range = lookup(ip_configuration.value, "allocated_ip_range", null)
+        ipv4_enabled                                  = lookup(ip_configuration.value, "ipv4_enabled", null)
+        private_network                               = lookup(ip_configuration.value, "private_network", null)
+        require_ssl                                   = lookup(ip_configuration.value, "require_ssl", null)
+        allocated_ip_range                            = lookup(ip_configuration.value, "allocated_ip_range", null)
+        enable_private_path_for_google_cloud_services = lookup(ip_configuration.value, "enable_private_path_for_google_cloud_services", null)
 
         dynamic "authorized_networks" {
           for_each = lookup(ip_configuration.value, "authorized_networks", [])
@@ -101,6 +103,24 @@ resource "google_sql_database_instance" "replicas" {
       zone = lookup(each.value, "zone", var.zone)
     }
 
+  }
+  dynamic "maintenance_window" {
+    for_each = lookup(each.value, "maintenance_window", var.maintenance_window)
+    content {
+      day          = lookup(maintenance_window.value, "day", null)
+      hour         = lookup(maintenance_window.value, "hour", null)
+      update_track = lookup(maintenance_window.value, "update_track", null)
+    }
+  }
+
+  dynamic "sql_server_audit_config" {
+    for_each = lookup(each.value, "sql_server_audit_config", var.sql_server_audit_config)
+    content {
+      retention_interval = lookup(sql_server_audit_config.value, "retention_interval", null)
+      upload_interval    = lookup(sql_server_audit_config.value, "upload_interval", null)
+      bucket             = lookup(sql_server_audit_config.value, "bucket", null)
+      time_zone          = lookup(sql_server_audit_config.value, "time_zone", null)
+    }
   }
 
   depends_on = [google_sql_database_instance.default]

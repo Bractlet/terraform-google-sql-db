@@ -121,12 +121,23 @@ variable "pricing_plan" {
 
 variable "maintenance_window" {
   description = "The Optional Maintenance Window"
-  type = list(object({
+  type = object({
     day          = number
     hour         = number
     update_track = string
-  }))
-  default = []
+  })
+  default = {}
+}
+
+variable "sql_server_audit_config" {
+  description = "SQL Server Audit Config"
+  type = object({
+    retention_interval = string
+    upload_interval    = string
+    time_zone          = string
+    bucket             = string
+  })
+  default = {}
 }
 
 variable "database_flags" {
@@ -241,6 +252,17 @@ variable "read_replicas" {
       require_ssl         = bool
       allocated_ip_range  = string
     })
+    maintenance_window = optional(object({
+      day          = number
+      hour         = number
+      update_track = string
+    }))
+    sql_server_audit_config = optional(object({
+      retention_interval = string
+      upload_interval    = string
+      time_zone          = string
+      bucket             = string
+    }))
     encryption_key_name = string
   }))
   default = []

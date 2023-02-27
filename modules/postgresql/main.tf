@@ -158,6 +158,16 @@ resource "google_sql_database_instance" "default" {
         update_track = lookup(maintenance_window.value, "update_track", null)
       }
     }
+
+    dynamic "sql_server_audit_config" {
+      for_each = var.sql_server_audit_config
+      content {
+        retention_interval = lookup(sql_server_audit_config.value, "retention_interval", null)
+        upload_interval    = lookup(sql_server_audit_config.value, "upload_interval", null)
+        bucket             = lookup(sql_server_audit_config.value, "bucket", null)
+        time_zone          = lookup(sql_server_audit_config.value, "time_zone", null)
+      }
+    }
   }
 
   lifecycle {
