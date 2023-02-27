@@ -46,7 +46,6 @@ resource "google_sql_database_instance" "replicas" {
         retention_interval = lookup(sql_server_audit_config.value, "retention_interval", null)
         upload_interval    = lookup(sql_server_audit_config.value, "upload_interval", null)
         bucket             = lookup(sql_server_audit_config.value, "bucket", null)
-        time_zone          = lookup(sql_server_audit_config.value, "time_zone", null)
       }
     }
 
