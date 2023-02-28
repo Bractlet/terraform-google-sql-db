@@ -247,10 +247,10 @@ variable "read_replicas" {
     disk_autoresize_limit = optional(number)
     disk_size             = optional(string)
     user_labels           = optional(map(string))
-    database_flags = optional(list(object({
+    database_flags = list(object({
       name  = string
       value = string
-    })))
+    }))
     ip_configuration = object({
       authorized_networks = list(map(string))
       ipv4_enabled        = bool
