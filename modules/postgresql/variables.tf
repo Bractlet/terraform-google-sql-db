@@ -140,8 +140,8 @@ variable "sql_server_audit_config" {
     bucket             = string
   })
   default = {
-    retention_interval = null
-    upload_interval    = null
+    retention_interval = "0s"
+    upload_interval    = "0s"
     bucket             = null
   }
 }

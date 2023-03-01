@@ -43,8 +43,8 @@ resource "google_sql_database_instance" "replicas" {
     dynamic "sql_server_audit_config" {
       for_each = lookup(each.value, "sql_server_audit_config", var.sql_server_audit_config)
       content {
-        retention_interval = lookup(sql_server_audit_config.value, "retention_interval", null)
-        upload_interval    = lookup(sql_server_audit_config.value, "upload_interval", null)
+        retention_interval = lookup(sql_server_audit_config.value, "retention_interval", "0s")
+        upload_interval    = lookup(sql_server_audit_config.value, "upload_interval", "0s")
         bucket             = lookup(sql_server_audit_config.value, "bucket", null)
       }
     }
