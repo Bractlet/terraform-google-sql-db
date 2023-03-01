@@ -127,8 +127,8 @@ variable "maintenance_window" {
     update_track = string
   })
   default = {
-    day          = null
-    hour         = null
+    day          = 0
+    hour         = 0
     update_track = null
   }
 }

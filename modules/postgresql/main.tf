@@ -153,8 +153,8 @@ resource "google_sql_database_instance" "default" {
     dynamic "maintenance_window" {
       for_each = var.maintenance_window
       content {
-        day          = lookup(maintenance_window.value, "day", null)
-        hour         = lookup(maintenance_window.value, "hour", null)
+        day          = lookup(maintenance_window.value, "day", 0)
+        hour         = lookup(maintenance_window.value, "hour", 0)
         update_track = lookup(maintenance_window.value, "update_track", null)
       }
     }
