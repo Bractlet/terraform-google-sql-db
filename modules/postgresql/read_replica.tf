@@ -41,7 +41,7 @@ resource "google_sql_database_instance" "replicas" {
     availability_type           = lookup(each.value, "availability_type", var.availability_type)
     deletion_protection_enabled = lookup(each.value, "deletion_protection_enabled", var.deletion_protection_enabled)
     dynamic "sql_server_audit_config" {
-      for_each = lookup(each.value, "sql_server_audit_config", var.sql_server_audit_config)
+      for_each = [lookup(each.value, "sql_server_audit_config", var.sql_server_audit_config)]
       content {
         retention_interval = lookup(sql_server_audit_config.value, "retention_interval", "0s")
         upload_interval    = lookup(sql_server_audit_config.value, "upload_interval", "0s")
@@ -111,7 +111,7 @@ resource "google_sql_database_instance" "replicas" {
       zone = lookup(each.value, "zone", var.zone)
     }
     dynamic "maintenance_window" {
-      for_each = lookup(each.value, "maintenance_window", var.maintenance_window)
+      for_each = [lookup(each.value, "maintenance_window", var.maintenance_window)]
       content {
         day          = lookup(maintenance_window.value, "day", 0)
         hour         = lookup(maintenance_window.value, "hour", 0)

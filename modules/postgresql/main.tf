@@ -151,7 +151,7 @@ resource "google_sql_database_instance" "default" {
 
 
     dynamic "maintenance_window" {
-      for_each = var.maintenance_window
+      for_each = [var.maintenance_window]
       content {
         day          = lookup(maintenance_window.value, "day", 0)
         hour         = lookup(maintenance_window.value, "hour", 0)
@@ -160,7 +160,7 @@ resource "google_sql_database_instance" "default" {
     }
 
     dynamic "sql_server_audit_config" {
-      for_each = var.sql_server_audit_config
+      for_each = [var.sql_server_audit_config]
       content {
         retention_interval = lookup(sql_server_audit_config.value, "retention_interval", "0s")
         upload_interval    = lookup(sql_server_audit_config.value, "upload_interval", "0s")
