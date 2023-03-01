@@ -127,8 +127,8 @@ variable "maintenance_window" {
     update_track = string
   })
   default = {
-    day          = 0
-    hour         = 0
+    day          = null
+    hour         = null
     update_track = null
   }
 }
@@ -140,8 +140,8 @@ variable "sql_server_audit_config" {
     bucket             = string
   })
   default = {
-    retention_interval = "0s"
-    upload_interval    = "0s"
+    retention_interval = null
+    upload_interval    = null
     bucket             = null
   }
 }
@@ -258,16 +258,16 @@ variable "read_replicas" {
       require_ssl         = bool
       allocated_ip_range  = string
     })
-    maintenance_window = object({
+    maintenance_window = optional(object({
       day          = optional(number)
       hour         = optional(number)
       update_track = optional(string)
-    })
-    sql_server_audit_config = object({
+    }))
+    sql_server_audit_config = optional(object({
       retention_interval = optional(string)
       upload_interval    = optional(string)
       bucket             = optional(string)
-    })
+    }))
     encryption_key_name = string
   }))
   default = []
