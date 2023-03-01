@@ -43,8 +43,8 @@ resource "google_sql_database_instance" "replicas" {
     dynamic "sql_server_audit_config" {
       for_each = [lookup(each.value, "sql_server_audit_config", var.sql_server_audit_config)]
       content {
-        retention_interval = lookup(sql_server_audit_config.value, "retention_interval", "0s")
-        upload_interval    = lookup(sql_server_audit_config.value, "upload_interval", "0s")
+        retention_interval = lookup(sql_server_audit_config.value, "retention_interval", null)
+        upload_interval    = lookup(sql_server_audit_config.value, "upload_interval", null)
         bucket             = lookup(sql_server_audit_config.value, "bucket", null)
       }
     }
@@ -113,8 +113,8 @@ resource "google_sql_database_instance" "replicas" {
     dynamic "maintenance_window" {
       for_each = [lookup(each.value, "maintenance_window", var.maintenance_window)]
       content {
-        day          = lookup(maintenance_window.value, "day", 0)
-        hour         = lookup(maintenance_window.value, "hour", 0)
+        day          = lookup(maintenance_window.value, "day", null)
+        hour         = lookup(maintenance_window.value, "hour", null)
         update_track = lookup(maintenance_window.value, "update_track", null)
       }
     }
