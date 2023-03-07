@@ -255,11 +255,11 @@ variable "read_replicas" {
       hour         = optional(number)
       update_track = optional(string)
     })))
-    sql_server_audit_config = optional(object({
+    sql_server_audit_config = object({
       retention_interval = string
       upload_interval    = string
       bucket             = string
-    }))
+    })
     encryption_key_name = string
   }))
   default = []
