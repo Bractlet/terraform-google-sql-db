@@ -121,20 +121,20 @@ variable "pricing_plan" {
 
 variable "maintenance_window" {
   description = "The Optional Maintenance Window"
-  type = object({
+  type = map(object({
     day          = number
     hour         = number
     update_track = string
-  })
+  }))
   default = {}
 }
 variable "sql_server_audit_config" {
   description = "SQL Server Audit Config"
-  type = object({
+  type = map(object({
     retention_interval = string
     upload_interval    = string
     bucket             = string
-  })
+  }))
   default = {}
 }
 
