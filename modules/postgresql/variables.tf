@@ -244,6 +244,7 @@ variable "read_replicas" {
       name  = string
       value = string
     }))
+    enable_private_path_for_google_cloud_services = optional(bool)
     ip_configuration = object({
       authorized_networks = list(map(string))
       ipv4_enabled        = bool
