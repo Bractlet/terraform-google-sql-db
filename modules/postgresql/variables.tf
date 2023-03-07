@@ -250,11 +250,11 @@ variable "read_replicas" {
       require_ssl         = bool
       allocated_ip_range  = string
     })
-    maintenance_window = object({
+    maintenance_window = map(object({
       day          = optional(number, null)
       hour         = optional(number, null)
       update_track = optional(string, null)
-    })
+    }))
     sql_server_audit_config = object({
       retention_interval = string
       upload_interval    = string
