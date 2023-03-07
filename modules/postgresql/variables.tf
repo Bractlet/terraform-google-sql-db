@@ -234,6 +234,7 @@ variable "read_replicas" {
     tier                  = string
     availability_type     = string
     zone                  = optional(string)
+    deletion_protection   = optional(bool)
     disk_type             = optional(string)
     disk_autoresize       = optional(bool)
     disk_autoresize_limit = optional(number)

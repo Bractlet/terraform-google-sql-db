@@ -39,7 +39,7 @@ resource "google_sql_database_instance" "replicas" {
     tier                        = lookup(each.value, "tier", var.tier)
     activation_policy           = "ALWAYS"
     availability_type           = lookup(each.value, "availability_type", var.availability_type)
-    deletion_protection_enabled = lookup(each.value, "deletion_protection_enabled", var.deletion_protection_enabled)
+    deletion_protection_enabled = lookup(each.value, "deletion_protection", var.read_replica_deletion_protection)
     dynamic "sql_server_audit_config" {
       for_each = [lookup(each.value, "sql_server_audit_config", var.sql_server_audit_config)]
       content {
