@@ -126,11 +126,7 @@ variable "maintenance_window" {
     hour         = number
     update_track = string
   })
-  default = {
-    day          = null
-    hour         = null
-    update_track = null
-  }
+  default = {}
 }
 variable "sql_server_audit_config" {
   description = "SQL Server Audit Config"
@@ -139,11 +135,7 @@ variable "sql_server_audit_config" {
     upload_interval    = string
     bucket             = string
   })
-  default = {
-    retention_interval = null
-    upload_interval    = null
-    bucket             = null
-  }
+  default = {}
 }
 
 variable "database_flags" {
