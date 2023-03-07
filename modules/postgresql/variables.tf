@@ -244,13 +244,13 @@ variable "read_replicas" {
       name  = string
       value = string
     }))
-    enable_private_path_for_google_cloud_services = optional(bool)
     ip_configuration = object({
-      authorized_networks = list(map(string))
-      ipv4_enabled        = bool
-      private_network     = string
-      require_ssl         = bool
-      allocated_ip_range  = string
+      authorized_networks                           = list(map(string))
+      ipv4_enabled                                  = bool
+      private_network                               = string
+      require_ssl                                   = bool
+      allocated_ip_range                            = string
+      enable_private_path_for_google_cloud_services = optional(bool)
     })
     maintenance_window = map(object({
       day          = optional(number, null)
