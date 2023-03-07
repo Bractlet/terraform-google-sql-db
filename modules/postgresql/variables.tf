@@ -251,9 +251,9 @@ variable "read_replicas" {
       allocated_ip_range  = string
     })
     maintenance_window = object({
-      day          = optional(number)
-      hour         = optional(number)
-      update_track = optional(string)
+      day          = optional(number, null)
+      hour         = optional(number, null)
+      update_track = optional(string, null)
     })
     sql_server_audit_config = object({
       retention_interval = string
