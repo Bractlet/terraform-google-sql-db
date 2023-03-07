@@ -111,7 +111,7 @@ resource "google_sql_database_instance" "replicas" {
       zone = lookup(each.value, "zone", var.zone)
     }
     dynamic "maintenance_window" {
-      for_each = [lookup(each.value, "maintenance_window", var.maintenance_window)]
+      for_each = lookup(each.value, "maintenance_window", var.maintenance_window)
       content {
         day          = maintenance_window.value["day"]
         hour         = maintenance_window.value["hour"]
