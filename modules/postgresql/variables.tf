@@ -258,7 +258,7 @@ variable "read_replicas" {
     sql_server_audit_config = object({
       retention_interval = string
       upload_interval    = string
-      bucket             = string
+      bucket             = optional(string)
     })
     encryption_key_name = string
   }))
