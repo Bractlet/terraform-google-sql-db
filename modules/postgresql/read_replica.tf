@@ -113,9 +113,9 @@ resource "google_sql_database_instance" "replicas" {
     dynamic "maintenance_window" {
       for_each = [lookup(each.value, "maintenance_window", var.maintenance_window)]
       content {
-        day          = lookup(maintenance_window.value, "day", null)
-        hour         = lookup(maintenance_window.value, "hour", null)
-        update_track = lookup(maintenance_window.value, "update_track", null)
+        day          = maintenance_window.value["day"]
+        hour         = maintenance_window.value["hour"]
+        update_track = maintenance_window.value["update_track"]
       }
     }
 
