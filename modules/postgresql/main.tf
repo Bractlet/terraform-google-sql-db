@@ -149,10 +149,23 @@ resource "google_sql_database_instance" "default" {
       follow_gae_application = var.follow_gae_application
     }
 
-    maintenance_window {
-      day          = var.maintenance_window_day
-      hour         = var.maintenance_window_hour
-      update_track = var.maintenance_window_update_track
+
+    dynamic "maintenance_window" {
+      for_each = var.maintenance_window
+      content {
+        day          = maintenance_window.value["day"]
+        hour         = maintenance_window.value["hour"]
+        update_track = maintenance_window.value["update_track"]
+      }
+    }
+
+    dynamic "sql_server_audit_config" {
+      for_each = var.sql_server_audit_config
+      content {
+        retention_interval = sql_server_audit_config.value["retention_interval"]
+        upload_interval    = sql_server_audit_config.value["upload_interval"]
+        bucket             = sql_server_audit_config.value["bucket"]
+      }
     }
   }
 

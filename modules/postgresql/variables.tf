@@ -119,22 +119,23 @@ variable "pricing_plan" {
   default     = "PER_USE"
 }
 
-variable "maintenance_window_day" {
-  description = "The day of week (1-7) for the master instance maintenance."
-  type        = number
-  default     = 1
+variable "maintenance_window" {
+  description = "The Optional Maintenance Window"
+  type = map(object({
+    day          = number
+    hour         = number
+    update_track = string
+  }))
+  default = {}
 }
-
-variable "maintenance_window_hour" {
-  description = "The hour of day (0-23) maintenance window for the master instance maintenance."
-  type        = number
-  default     = 23
-}
-
-variable "maintenance_window_update_track" {
-  description = "The update track of maintenance window for the master instance maintenance.Can be either `canary` or `stable`."
-  type        = string
-  default     = "canary"
+variable "sql_server_audit_config" {
+  description = "SQL Server Audit Config"
+  type = map(object({
+    retention_interval = string
+    upload_interval    = string
+    bucket             = string
+  }))
+  default = {}
 }
 
 variable "database_flags" {
@@ -232,22 +233,34 @@ variable "read_replicas" {
     name_override         = optional(string)
     tier                  = string
     availability_type     = string
-    zone                  = string
-    disk_type             = string
-    disk_autoresize       = bool
-    disk_autoresize_limit = number
-    disk_size             = string
-    user_labels           = map(string)
+    zone                  = optional(string)
+    deletion_protection   = optional(bool)
+    disk_type             = optional(string)
+    disk_autoresize       = optional(bool)
+    disk_autoresize_limit = optional(number)
+    disk_size             = optional(string)
+    user_labels           = optional(map(string))
     database_flags = list(object({
       name  = string
       value = string
     }))
     ip_configuration = object({
-      authorized_networks = list(map(string))
-      ipv4_enabled        = bool
-      private_network     = string
-      require_ssl         = bool
-      allocated_ip_range  = string
+      authorized_networks                           = list(map(string))
+      ipv4_enabled                                  = bool
+      private_network                               = string
+      require_ssl                                   = bool
+      allocated_ip_range                            = string
+      enable_private_path_for_google_cloud_services = optional(bool)
+    })
+    maintenance_window = map(object({
+      day          = optional(number, null)
+      hour         = optional(number, null)
+      update_track = optional(string, null)
+    }))
+    sql_server_audit_config = object({
+      retention_interval = string
+      upload_interval    = string
+      bucket             = optional(string)
     })
     encryption_key_name = string
   }))
